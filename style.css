@@ -21,7 +21,7 @@ body {
   line-height: 1.6;
   background: var(--white);
   -webkit-font-smoothing: antialiased;
-  font-size: 15px; /* REDUCED BASE FONT SIZE */
+  font-size: 15px;
 }
 
 a { color: inherit; text-decoration: none; transition: all 0.3s ease; }
@@ -104,47 +104,92 @@ h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 38px)
 .button.secondary { color: var(--navy); background: transparent; border: 1px solid var(--line); }
 .button.secondary:hover { border-color: var(--navy); background: var(--light); }
 
-/* --- SOLAR CELL ART --- */
+/* --- NEW BRIGHT 3D SOLAR CELL ART --- */
 .hero-art {
-  min-height: 380px;
-  border-radius: 20px;
-  background: var(--navy);
+  min-height: 420px;
   position: relative;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
 }
 
-.glow {
-  position: absolute; width: 200px; height: 200px;
-  background: var(--teal); filter: blur(60px); opacity: 0.4;
-  border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);
+.art-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #e0f2fe, transparent 70%);
+  z-index: 1;
 }
 
-.solar-cell {
-  width: 220px; height: 220px;
-  background: linear-gradient(135deg, #0f766e, #14b8a6);
-  border-radius: 8px;
+.solar-cell-container {
   position: relative;
   z-index: 2;
-  transform: rotate(45deg) scale(0.8);
-  box-shadow: 0 0 30px rgba(20, 184, 166, 0.4);
-  border: 2px solid rgba(255,255,255,0.2);
+  width: 280px;
+  height: 280px;
+  transform-style: preserve-3d;
+  transform: rotateX(45deg) rotateZ(-45deg);
+  animation: float3d 6s ease-in-out infinite;
+}
+
+.solar-panel {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0f766e, #14b8a6, #2dd4bf);
+  border-radius: 12px;
+  box-shadow: 
+    -20px 20px 40px rgba(15, 23, 42, 0.15),
+    inset 0 0 20px rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  position: relative;
   overflow: hidden;
 }
 
-.solar-cell .grid-lines {
-  position: absolute; inset: 0;
+.panel-grid {
+  position: absolute;
+  inset: 15px;
   background-image: 
-    linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
-  background-size: 25px 25px;
+    linear-gradient(rgba(255,255,255,0.4) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,255,255,0.4) 2px, transparent 2px);
+  background-size: 30px 30px;
+  border-radius: 6px;
 }
 
-.hero-art p {
-  position: absolute; bottom: 20px; left: 24px;
-  color: #94a3b8; font-size: 10px; letter-spacing: 2px; z-index: 3;
+.panel-reflection {
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.8) 0%, transparent 40%, transparent 100%);
+  transform: rotate(30deg);
+  animation: shine 4s infinite;
+}
+
+.energy-beam {
+  position: absolute;
+  width: 4px;
+  height: 150px;
+  background: linear-gradient(to top, transparent, #2dd4bf);
+  border-radius: 4px;
+  filter: blur(2px);
+}
+
+.beam-1 { bottom: -100px; right: 50px; transform: rotate(45deg); animation: pulse 3s infinite; }
+.beam-2 { top: -100px; left: 50px; transform: rotate(45deg); animation: pulse 3s infinite reverse; }
+
+@keyframes float3d {
+  0% { transform: rotateX(45deg) rotateZ(-45deg) translateY(0px); }
+  50% { transform: rotateX(45deg) rotateZ(-45deg) translateY(-15px); }
+  100% { transform: rotateX(45deg) rotateZ(-45deg) translateY(0px); }
+}
+
+@keyframes shine {
+  0% { transform: translate(-50%, -50%) rotate(30deg); }
+  100% { transform: translate(50%, 50%) rotate(30deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
 }
 
 /* --- METRICS --- */
@@ -226,8 +271,8 @@ footer p { width: 100%; margin: 0; border-top: 1px solid rgba(255,255,255,0.1); 
 /* --- MOBILE --- */
 @media (max-width: 768px) {
   .hero { grid-template-columns: 1fr; padding-top: 50px; gap: 40px; }
-  .hero-art { min-height: 280px; }
-  .solar-cell { width: 160px; height: 160px; }
+  .hero-art { min-height: 300px; }
+  .solar-cell-container { width: 200px; height: 200px; }
   .metrics { grid-template-columns: 1fr 1fr; margin: 0 5% 20px; padding: 20px; }
   .metrics div { border-left: none; padding-left: 0; }
   .cards { grid-template-columns: 1fr; }
