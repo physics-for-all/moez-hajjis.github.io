@@ -1,4 +1,3 @@
-
 const menuButton = document.getElementById("menuButton");
 const navigation = document.getElementById("navigation");
 
@@ -12,5 +11,4 @@ navigation.querySelectorAll("a").forEach(link => {
   });
 });
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
